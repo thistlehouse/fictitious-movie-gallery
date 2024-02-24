@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  moviegallery-api:
+    build:
+      context: .
+      dockerfile: ./MovieGallery.Api/Dockerfile
+    ports:
+      - "5001:5001"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    networks:
+      - moviegallery-network
+
+  movie-gallery-ui:
+    build:
+      context: ./movie-gallery.ui
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+      - MOVIE_API=http://moviegallery-api:5001
+    networks:
+      - moviegallery-network
+    depends_on:
+      - moviegallery-api
+
+networks:
+  moviegallery-network:

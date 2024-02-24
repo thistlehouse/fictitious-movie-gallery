@@ -1,0 +1,99 @@
+.categorySection {
+    gap: 80px;
+    padding: 2% 10%;
+}
+
+.cardsWrapper {
+    display: flex;
+    gap: 10px;
+    padding-bottom: 8px;
+    overflow-x: auto;
+}
+
+.category {
+    font-size: 2em;
+    font-weight: 800;
+    color: rgb(8, 58, 1);
+}
+
+.movieCard {
+    position: relative;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+    gap: 10px;
+    border-radius: 6px;
+    min-width: 250px;
+}
+
+.movieCard h2 {
+    color: #000;
+}
+
+.movieCard p {
+    color: #000;
+    font-size: 12px;
+}
+
+.movieCard img {
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    width: 250px;
+    height: 350px;
+    object-fit: fit;
+}
+
+.ratingWrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+    /* Adjust as needed */
+}
+
+.movieCard .details {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding-left: 10px;
+}
+
+.imageWrapper {}
+
+.ratingWrapper {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin-top: 10px;
+    z-index: 1;
+}
+
+.rating {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    width: 100px;
+}
+
+.movieCard .rating p {
+    font-size: 20px;
+    font-weight: 600;
+    color: #00570f;
+}
+
+.ratingStar {
+    color: #00570f;
+    height: 25px;
+}
+
+.details {
+    max-width: 250px;
+}
+
+.details h2 {
+    word-wrap: break-word;
+}

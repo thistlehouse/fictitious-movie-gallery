@@ -1,0 +1,4 @@
+@localhost = http://localhost:5106
+@filter = Nulla
+
+Get {{localhost}}/movies?filter={{filter}}

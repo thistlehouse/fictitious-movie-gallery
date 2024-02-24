@@ -1,0 +1,6 @@
+@locahost = http://localhost:5106
+
+GET {{locahost}}/
+Accept: application/json
+
+###

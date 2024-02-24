@@ -1,0 +1,5 @@
+@localhost = http://localhost:5106
+@id = 5162506e-9d36-476e-a316-bab05571018f
+
+GET {{localhost}}/movies/details/{{id}}/
+Content-Type: "application/json"

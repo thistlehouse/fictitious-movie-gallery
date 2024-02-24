@@ -1,0 +1,4 @@
+@localhost = http://localhost:5106
+
+GET {{localhost}}/movies/all
+Content-Type: "application/json"
