@@ -2,12 +2,15 @@ using MovieGallery.Api.Endpoints;
 using MovieGallery.Api.Extensions;
 using MovieGallery.Application;
 using MovieGallery.Infrastructure;
+using MovieGallery.Infrastructure.Authentication;
 
 var builder = WebApplication.CreateBuilder(args);
 {
     builder.Services
         .AddApplication()
-        .AddInfrastructure();
+        .AddInfrastructure(builder.Configuration);
+
+    builder.Services.ConfigureOptions<JwtOptions>();
 
     builder.Services.AddRouting(options => options.LowercaseUrls = true);
     builder.Services.AddEndpointsApiExplorer();
