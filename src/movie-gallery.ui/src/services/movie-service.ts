@@ -1,7 +1,7 @@
 import { unstable_noStore as noStore } from "next/cache";
 import axios from "axios";
 
-const baseUrl = axios.create({ baseURL: process.env.MOVIE_API + "/movies" });
+const baseUrl = axios.create({ baseURL: "http://localhost:5106/movies" }); // process.env.MOVIE_API + "/movies"
 
 export async function getMovies() {
   noStore();
@@ -30,7 +30,7 @@ export async function getMovieById(id: string) {
 export async function getMoviesByFilter(filter: string) {
   noStore();
   try {
-    const response = await baseUrl.get(`/?filter=${filter.toLowerCase()}`);
+    const response = await baseUrl.get(`/search/?filter=${filter.toLowerCase()}`);
 
     return response.data;
   } catch (error) {
