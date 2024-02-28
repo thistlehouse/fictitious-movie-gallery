@@ -1,7 +1,7 @@
 using MovieGallery.Api.Endpoints;
+using MovieGallery.Api.Extensions;
 using MovieGallery.Application;
 using MovieGallery.Infrastructure;
-using MovieGallery.Infrastructure.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 {
@@ -23,13 +23,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 var app = builder.Build();
 {
-    var services = app.Services.CreateScope();
-
-    var context = services.ServiceProvider
-        .GetRequiredService<MovieGalleryDbContext>();
-
-    context.Database.EnsureCreated();
-    context.SeedMovie(30);
+    app.SeedMoviesData(30);
 
     // Configure the HTTP request pipeline.
     if (app.Environment.IsDevelopment())

@@ -106,7 +106,7 @@ public static class MovieEndpoints
         .WithOpenApi();
 
         group.MapGet(
-            "/",
+            "/search",
             async (
                 [FromQuery] string? filter,
                 ISender sender,
