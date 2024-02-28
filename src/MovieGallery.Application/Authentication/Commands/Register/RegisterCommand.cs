@@ -1,0 +1,11 @@
+using MediatR;
+
+using MovieGallery.Application.Authentication.Common;
+
+namespace MovieGallery.Application.Authentication.Commands.Register;
+
+public record RegisterCommand(
+    string FirstName,
+    string LastName,
+    string Email,
+    string Password) : IRequest<AuthenticationResult>;

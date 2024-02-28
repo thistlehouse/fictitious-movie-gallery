@@ -1,7 +1,6 @@
 using MediatR;
 
 using MovieGallery.Application.Common.Persistence;
-using MovieGallery.Application.Common.Services.OpenJourney;
 using MovieGallery.Application.Movies.Common;
 using MovieGallery.Domain.Domain.Movies;
 using MovieGallery.Domain.Movies.Enums;
@@ -9,8 +8,7 @@ using MovieGallery.Domain.Movies.Enums;
 namespace MovieGallery.Application.Movies.Commands.CreateMovie;
 
 public class CreateMovieCommandHandler(
-    IMovieRepository movieRepository,
-    IOpenAiImageService openAiImageService)
+    IMovieRepository movieRepository)
     : IRequestHandler<CreateMovieCommand, MovieResult>
 {
     public async Task<MovieResult> Handle(
@@ -21,8 +19,6 @@ public class CreateMovieCommandHandler(
         {
             throw new ArgumentException("MovieCategory is not correctly specified");
         }
-
-        var image = openAiImageService.GetImage();
 
         var movie = Movie.Create(
             request.Name,

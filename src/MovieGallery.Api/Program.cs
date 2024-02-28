@@ -1,16 +1,17 @@
 using MovieGallery.Api.Endpoints;
 using MovieGallery.Api.Extensions;
+using MovieGallery.Api.OptionsSetup.Authentication;
 using MovieGallery.Application;
 using MovieGallery.Infrastructure;
-using MovieGallery.Infrastructure.Authentication;
 
 var builder = WebApplication.CreateBuilder(args);
 {
     builder.Services
         .AddApplication()
-        .AddInfrastructure(builder.Configuration);
+        .AddInfrastructure();
 
-    builder.Services.ConfigureOptions<JwtOptions>();
+    builder.Services.ConfigureOptions<JwtOptionsSetup>();
+    builder.Services.ConfigureOptions<JwtBearerOptionsSetup>();
 
     builder.Services.AddRouting(options => options.LowercaseUrls = true);
     builder.Services.AddEndpointsApiExplorer();

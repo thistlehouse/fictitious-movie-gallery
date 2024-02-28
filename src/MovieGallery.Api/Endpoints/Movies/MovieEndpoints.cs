@@ -14,7 +14,7 @@ public static class MovieEndpoints
 {
     public static void MapMovieEndpoints(this IEndpointRouteBuilder builder)
     {
-        var group = builder.MapGroup("movies");
+        var group = builder.MapGroup("movies").WithTags("Movies");
 
         group.MapPost(
             "/new",
