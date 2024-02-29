@@ -23,5 +23,9 @@ public class MovieMapping : IRegister
             .Map(dest => dest.Synopsis, src => src.Movie.Synopsis)
             .Map(dest => dest.Category, src => src.Movie.Category)
             .Map(dest => dest.RatingValue, src => src.Movie.RatingValue);
+
+        config.NewConfig<MovieResult, ListMovieResponse>()
+            .Map(dest => dest.Id, src => src.Movie.Id.ToString())
+            .Map(dest => dest, src => src.Movie);
     }
 }

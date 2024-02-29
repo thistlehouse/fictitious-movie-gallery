@@ -1,6 +1,4 @@
-using Mapster;
-
-using MapsterMapper;
+using MovieGallery.Api.Mapping;
 
 namespace MovieGallery.Api;
 
@@ -8,10 +6,7 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddPresentation(this IServiceCollection services)
     {
-        var config = new TypeAdapterConfig();
-
-        services.AddSingleton(config);
-        services.AddScoped<IMapper, ServiceMapper>();
+        services.AddMappings();
 
         return services;
     }

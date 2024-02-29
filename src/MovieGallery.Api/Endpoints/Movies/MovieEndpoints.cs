@@ -5,6 +5,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 using MovieGallery.Application.Movies.Commands.CreateMovie;
+using MovieGallery.Application.Movies.Common;
 using MovieGallery.Application.Movies.Queries.ListMovieById;
 using MovieGallery.Application.Movies.Queries.ListMovies;
 using MovieGallery.Application.Movies.Queries.ListMoviesByFilter;
@@ -39,6 +40,7 @@ public static class MovieEndpoints
             "/all",
             async (
                 ISender sender,
+                IMapper mapper,
                 CancellationToken cancellationToken) =>
         {
             var query = new ListMoviesQuery();
@@ -46,17 +48,8 @@ public static class MovieEndpoints
             var result = await sender.Send(query, cancellationToken);
 
             var response = result.Select(
-                r => new ListMovieResponse(
-                    r.Movie.Id.ToString(),
-                    r.Movie.Name,
-                    r.Movie.Classification,
-                    r.Movie.Cast,
-                    r.Movie.Duration,
-                    r.Movie.ImageUrl.ToString(),
-                    r.Movie.Synopsis,
-                    r.Movie.Category.ToString(),
-                    r.Movie.Rating))
-                .ToList();
+                r => mapper.Map<ListMovieResponse>(r.Movie))
+                    .ToList();
 
             return response;
         })
@@ -67,6 +60,7 @@ public static class MovieEndpoints
             "/details/{id}",
             async (
                 Guid id,
+                IMapper mapper,
                 ISender sender,
                 CancellationToken cancellationToken) =>
         {
@@ -74,16 +68,7 @@ public static class MovieEndpoints
 
             var result = await sender.Send(query, cancellationToken);
 
-            var response = new ListMovieResponse(
-                result.Movie.Id.ToString(),
-                result.Movie.Name,
-                result.Movie.Classification,
-                result.Movie.Cast,
-                result.Movie.Duration,
-                result.Movie.ImageUrl.ToString(),
-                result.Movie.Synopsis,
-                result.Movie.Category.ToString(),
-                result.Movie.Rating);
+            var response = mapper.Map<ListMovieResponse>(result);
 
             return response;
         })
@@ -94,6 +79,7 @@ public static class MovieEndpoints
             "/search",
             async (
                 [FromQuery] string? filter,
+                IMapper mapper,
                 ISender sender,
                 CancellationToken cancellationToken) =>
         {
@@ -103,17 +89,8 @@ public static class MovieEndpoints
             var result = await sender.Send(query, cancellationToken);
 
             var response = result.Select(
-                r => new ListMovieResponse(
-                    r.Movie.Id.ToString(),
-                    r.Movie.Name,
-                    r.Movie.Classification,
-                    r.Movie.Cast,
-                    r.Movie.Duration,
-                    r.Movie.ImageUrl.ToString(),
-                    r.Movie.Synopsis,
-                    r.Movie.Category.ToString(),
-                    r.Movie.Rating))
-                .ToList();
+                r => mapper.Map<ListMovieResponse>(r.Movie))
+                    .ToList();
 
             return response;
         })
