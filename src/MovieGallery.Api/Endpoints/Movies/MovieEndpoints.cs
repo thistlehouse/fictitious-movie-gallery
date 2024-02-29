@@ -5,7 +5,6 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 using MovieGallery.Application.Movies.Commands.CreateMovie;
-using MovieGallery.Application.Movies.Common;
 using MovieGallery.Application.Movies.Queries.ListMovieById;
 using MovieGallery.Application.Movies.Queries.ListMovies;
 using MovieGallery.Application.Movies.Queries.ListMoviesByFilter;
