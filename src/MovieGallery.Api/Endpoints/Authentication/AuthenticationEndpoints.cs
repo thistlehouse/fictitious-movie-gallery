@@ -1,5 +1,7 @@
 using MediatR;
 
+using Microsoft.AspNetCore.Http.HttpResults;
+
 using MovieGallery.Application.Authentication.Commands.Register;
 using MovieGallery.Contracts.Authentication;
 

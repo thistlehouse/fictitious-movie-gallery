@@ -1,3 +1,5 @@
+using MapsterMapper;
+
 using MediatR;
 
 using Microsoft.AspNetCore.Mvc;
@@ -19,31 +21,14 @@ public static class MovieEndpoints
         group.MapPost(
             "/new",
             async (
-                CreateMovieRequest createMovieRequest,
+                CreateMovieRequest request,
                 ISender sender,
+                IMapper mapper,
                 CancellationToken cancellationToken) =>
         {
-            var command = new CreateMovieCommand(
-                createMovieRequest.Name,
-                createMovieRequest.Classification,
-                createMovieRequest.Cast,
-                createMovieRequest.Duration,
-                createMovieRequest.ImageUrl,
-                createMovieRequest.Synopsis,
-                createMovieRequest.Category,
-                createMovieRequest.Rating);
-
+            var command = mapper.Map<CreateMovieCommand>(request);
             var result = await sender.Send(command, cancellationToken);
-
-            var response = new CreateMovieResponse(
-                result.Movie.Name,
-                result.Movie.Classification,
-                result.Movie.Cast,
-                result.Movie.Duration,
-                result.Movie.ImageUrl.ToString(),
-                result.Movie.Synopsis,
-                result.Movie.Category.ToString(),
-                result.Movie.Rating);
+            var response = mapper.Map<CreateMovieResponse>(result.Movie);
 
             return response;
         })

@@ -1,4 +1,4 @@
 @localhost = http://localhost:5106
-@filter = Nulla
+@filter = Matrix
 
-Get {{localhost}}/movies?filter={{filter}}
+Get {{localhost}}/movies/search?filter={{filter}}

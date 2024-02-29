@@ -1,6 +1,7 @@
 namespace MovieGallery.Contracts.Movies;
 
 public record CreateMovieResponse(
+    string Year,
     string Name,
     string Classification,
     List<string> Cast,
@@ -8,4 +9,4 @@ public record CreateMovieResponse(
     string ImageUrl,
     string Synopsis,
     string Category,
-    decimal Rating);
+    decimal RatingValue);

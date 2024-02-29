@@ -1,19 +1,20 @@
+using MovieGallery.Api;
 using MovieGallery.Api.Endpoints;
-using MovieGallery.Api.Extensions;
 using MovieGallery.Api.OptionsSetup.Authentication;
 using MovieGallery.Application;
 using MovieGallery.Infrastructure;
+using MovieGallery.Infrastructure.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 {
     builder.Services
+        .AddPresentation()
         .AddApplication()
         .AddInfrastructure();
 
     builder.Services.ConfigureOptions<JwtOptionsSetup>();
     builder.Services.ConfigureOptions<JwtBearerOptionsSetup>();
 
-    builder.Services.AddRouting(options => options.LowercaseUrls = true);
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
 
@@ -27,7 +28,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 var app = builder.Build();
 {
-    app.SeedMoviesData(30);
+    var context = app.Services
+        .GetRequiredService<MovieGalleryDbContext>();
+
+    context.SeedMovies(30);
 
     // Configure the HTTP request pipeline.
     if (app.Environment.IsDevelopment())

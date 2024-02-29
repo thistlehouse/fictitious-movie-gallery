@@ -9,15 +9,21 @@ namespace MovieGallery.Infrastructure.Persistence.Repositories;
 
 public class MovieRepository(MovieGalleryDbContext context) : IMovieRepository
 {
+
     public async Task AddMovieAsync(Movie movie, CancellationToken cancellationToken)
     {
-        context.Add(movie);
+        context.Movies.Add(movie);
         await context.SaveChangesAsync(cancellationToken);
     }
 
     public async Task<List<Movie>> GetAll(CancellationToken cancellationToken)
     {
-        return await context.Movies.ToListAsync(cancellationToken);
+        if (context is null)
+        {
+            throw new InvalidOperationException("Dbcontext is null");
+        }
+
+        return await context.Movies.ToListAsync();
     }
 
     public async Task<Movie?> GetById(Guid id, CancellationToken cancellationToken)

@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 using MovieGallery.Application.Common.Authentication;
@@ -23,11 +22,17 @@ public static class DependencyInjection
 
     private static IServiceCollection AddPersistence(this IServiceCollection services)
     {
-        services.AddDbContext<MovieGalleryDbContext>(
-            options => options.UseInMemoryDatabase("MovieGallery"));
-
         services.AddScoped<IMovieRepository, MovieRepository>();
         services.AddScoped<IUserRepository, UserRepository>();
+
+        services.AddSingleton(provider =>
+        {
+            var optionsBuilder = new DbContextOptionsBuilder<MovieGalleryDbContext>();
+
+            optionsBuilder.UseInMemoryDatabase("MovieGallery");
+
+            return new MovieGalleryDbContext(optionsBuilder.Options);
+        });
 
         return services;
     }

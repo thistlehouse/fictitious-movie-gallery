@@ -4,6 +4,7 @@ POST {{localhost}}/movies/new
 Content-Type: application/json
 
 {
+  "year": "2002",
   "name": "Matrix",
   "classification": "G",
   "cast": [

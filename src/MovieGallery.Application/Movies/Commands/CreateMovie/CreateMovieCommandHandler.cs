@@ -12,23 +12,23 @@ public class CreateMovieCommandHandler(
     : IRequestHandler<CreateMovieCommand, MovieResult>
 {
     public async Task<MovieResult> Handle(
-        CreateMovieCommand request,
+        CreateMovieCommand command,
         CancellationToken cancellationToken)
     {
-        if (!Enum.TryParse(request.Category, ignoreCase: true, out MovieCategory category))
+        if (!Enum.TryParse(command.Category, ignoreCase: true, out MovieCategory category))
         {
             throw new ArgumentException("MovieCategory is not correctly specified");
         }
 
         var movie = Movie.Create(
-            request.Name,
-            request.Classification,
-            request.Cast,
-            request.Duration,
-            new Uri("image.Urls.Get"),
-            request.Synopsis,
-            category,
-            request.Rating);
+            command.Year,
+            command.Name,
+            command.Classification,
+            command.Cast,
+            command.Duration,
+            new Uri(command.ImageUrl),
+            command.Synopsis,
+            category);
 
         await movieRepository.AddMovieAsync(movie, cancellationToken);
 

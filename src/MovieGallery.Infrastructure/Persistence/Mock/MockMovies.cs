@@ -7,7 +7,7 @@ namespace MovieGallery.Infrastructure.Persistence.Mock;
 
 public static class MockMovies
 {
-    public static void GenerateMovies(MovieGalleryDbContext context, int count)
+    public static List<Movie> GenerateMovies(int count)
     {
         string[] classification =
         [
@@ -20,6 +20,7 @@ public static class MockMovies
 
         var faker = new Faker<Movie>()
             .RuleFor(m => m.Id, f => Guid.NewGuid())
+            .RuleFor(m => m.Year, f => f.Random.Number(1950, 2024).ToString())
             .RuleFor(m => m.Name, f => f.Lorem.Sentence(3))
             .RuleFor(m => m.Classification, f => classification[f.Random.Number(0, classification.Length - 1)])
             .RuleFor(m => m.Category, f => f.PickRandom<MovieCategory>())
@@ -28,8 +29,8 @@ public static class MockMovies
             .RuleFor(m => m.ImageUrl, f => new Uri("https://placehold.co/320x560/png"))
             .RuleFor(m => m.Rating, f => Math.Round(f.Random.Decimal(3, 5), 1));
 
-        context.Movies.AddRange(faker.Generate(count));
+        var movies = faker.Generate(count);
 
-        context.SaveChanges();
+        return movies;
     }
 }
