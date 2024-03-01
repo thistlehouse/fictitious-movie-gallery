@@ -3,6 +3,7 @@ using Mapster;
 using MovieGallery.Application.Authentication.Common;
 using MovieGallery.Application.Authentication.Queries.Login;
 using MovieGallery.Contracts.Authentication;
+using MovieGallery.Domain.Movies.Users;
 
 using LoginRequest = MovieGallery.Contracts.Authentication.LoginRequest;
 
