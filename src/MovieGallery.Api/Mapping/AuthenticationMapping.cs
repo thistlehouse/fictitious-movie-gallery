@@ -7,7 +7,7 @@ using MovieGallery.Contracts.Authentication;
 
 using LoginRequest = MovieGallery.Contracts.Authentication.LoginRequest;
 
-namespace MovieGallery.Api.Mapping.Authentication;
+namespace MovieGallery.Api.Mapping;
 
 public class AuthenticationMapping : IRegister
 {

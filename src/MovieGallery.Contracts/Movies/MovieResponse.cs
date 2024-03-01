@@ -1,6 +1,7 @@
 namespace MovieGallery.Contracts.Movies;
 
-public record CreateMovieResponse(
+public record MovieResponse(
+    string Id,
     string Year,
     string Name,
     string Classification,

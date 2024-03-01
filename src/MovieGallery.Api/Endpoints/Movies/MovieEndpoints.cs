@@ -22,13 +22,13 @@ public static class MovieEndpoints
             "/new",
             async (
                 CreateMovieRequest request,
-                ISender sender,
                 IMapper mapper,
+                ISender sender,
                 CancellationToken cancellationToken) =>
         {
             var command = mapper.Map<CreateMovieCommand>(request);
             var result = await sender.Send(command, cancellationToken);
-            var response = mapper.Map<CreateMovieResponse>(result.Movie);
+            var response = mapper.Map<MovieResponse>(result);
 
             return response;
         })
@@ -43,11 +43,10 @@ public static class MovieEndpoints
                 CancellationToken cancellationToken) =>
         {
             var query = new ListMoviesQuery();
-
             var result = await sender.Send(query, cancellationToken);
 
             var response = result.Select(
-                r => mapper.Map<ListMovieResponse>(r.Movie))
+                r => mapper.Map<MovieResponse>(r))
                     .ToList();
 
             return response;
@@ -64,10 +63,8 @@ public static class MovieEndpoints
                 CancellationToken cancellationToken) =>
         {
             var query = new ListMovieByIdQuery(id);
-
             var result = await sender.Send(query, cancellationToken);
-
-            var response = mapper.Map<ListMovieResponse>(result);
+            var response = mapper.Map<MovieResponse>(result);
 
             return response;
         })
@@ -82,13 +79,11 @@ public static class MovieEndpoints
                 ISender sender,
                 CancellationToken cancellationToken) =>
         {
-            var request = new ListMoviesByFilterRequest(filter!);
-            var query = new ListMoviesByFilterQuery(request.Filter);
-
+            var query = mapper.Map<ListMoviesByFilterQuery>(filter!);
             var result = await sender.Send(query, cancellationToken);
 
             var response = result.Select(
-                r => mapper.Map<ListMovieResponse>(r.Movie))
+                r => mapper.Map<MovieResponse>(r))
                     .ToList();
 
             return response;
