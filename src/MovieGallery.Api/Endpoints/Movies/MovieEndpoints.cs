@@ -32,6 +32,7 @@ public static class MovieEndpoints
 
             return response;
         })
+        .RequireAuthorization()
         .WithName("create-movie")
         .WithOpenApi();
 

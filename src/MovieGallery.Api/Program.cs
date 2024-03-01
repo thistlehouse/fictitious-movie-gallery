@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+
 using MovieGallery.Api;
 using MovieGallery.Api.Endpoints;
 using MovieGallery.Api.OptionsSetup.Authentication;
@@ -14,6 +16,11 @@ var builder = WebApplication.CreateBuilder(args);
 
     builder.Services.ConfigureOptions<JwtOptionsSetup>();
     builder.Services.ConfigureOptions<JwtBearerOptionsSetup>();
+    builder.Services.AddAuthorization();
+
+    builder.Services
+        .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+        .AddJwtBearer();
 
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
@@ -41,6 +48,8 @@ var app = builder.Build();
     }
 
     app.MapApiEndpoints();
+    app.UseAuthentication();
+    app.UseAuthorization();
     app.UseHttpsRedirection();
     app.UseCors();
     app.Run();
