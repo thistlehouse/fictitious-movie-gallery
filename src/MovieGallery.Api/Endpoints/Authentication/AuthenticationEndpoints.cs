@@ -1,8 +1,12 @@
+using MapsterMapper;
+
 using MediatR;
 
 using Microsoft.AspNetCore.Http.HttpResults;
 
 using MovieGallery.Application.Authentication.Commands.Register;
+using MovieGallery.Application.Authentication.Common;
+using MovieGallery.Application.Authentication.Queries.Login;
 using MovieGallery.Contracts.Authentication;
 
 namespace MovieGallery.Api.Endpoints.Users;
@@ -35,5 +39,19 @@ public static class AuthenticationEndpoints
             })
             .WithName("create-user")
             .WithOpenApi();
+
+        group.MapPost(
+            "/login",
+            async (
+                LoginRequest request,
+                IMapper mapper,
+                ISender sender) =>
+            {
+                var query = mapper.Map<LoginQuery>(request);
+                var result = await sender.Send(query);
+                var response = mapper.Map<AuthenticationResult>(result);
+
+                return response;
+            });
     }
 }
