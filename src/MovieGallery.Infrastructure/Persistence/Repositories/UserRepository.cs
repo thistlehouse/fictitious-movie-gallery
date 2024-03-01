@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+
 using MovieGallery.Application.Common.Persistence;
 using MovieGallery.Domain.Movies.Users;
 
@@ -12,5 +14,11 @@ public class UserRepository(MovieGalleryDbContext context)
     {
         _context.Users.Add(user);
         await _context.SaveChangesAsync(cancellationToken);
+    }
+
+    public async Task<User?> GetUserByEmailAsync(string email, CancellationToken cancellationToken)
+    {
+        return await _context.Users
+            .SingleOrDefaultAsync(user => user.Email == email);
     }
 }
