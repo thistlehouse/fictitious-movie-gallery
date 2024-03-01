@@ -49,7 +49,7 @@ public static class AuthenticationEndpoints
             {
                 var query = mapper.Map<LoginQuery>(request);
                 var result = await sender.Send(query);
-                var response = mapper.Map<AuthenticationResult>(result);
+                var response = mapper.Map<AuthenticationResponse>(result);
 
                 return response;
             });
