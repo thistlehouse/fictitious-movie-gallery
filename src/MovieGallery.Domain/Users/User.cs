@@ -38,4 +38,10 @@ public class User
             email,
             password);
     }
+
+#pragma warning disable CS8618
+    public User()
+    {
+    }
+#pragma warning restore CS8618
 }
