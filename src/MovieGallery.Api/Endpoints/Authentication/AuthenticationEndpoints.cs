@@ -2,10 +2,7 @@ using MapsterMapper;
 
 using MediatR;
 
-using Microsoft.AspNetCore.Http.HttpResults;
-
 using MovieGallery.Application.Authentication.Commands.Register;
-using MovieGallery.Application.Authentication.Common;
 using MovieGallery.Application.Authentication.Queries.Login;
 using MovieGallery.Contracts.Authentication;
 
@@ -19,21 +16,12 @@ public static class AuthenticationEndpoints
 
         group.MapPost("/register", async (
             RegisterRequest request,
+            IMapper mapper,
             ISender sender) =>
             {
-                var command = new RegisterCommand(
-                    request.FirstName,
-                    request.LastName,
-                    request.Email,
-                    request.Password);
-
+                var command = mapper.Map<RegisterCommand>(request);
                 var result = await sender.Send(command);
-
-                var response = new AuthenticationResponse(
-                    result.User.FirstName,
-                    result.User.LastName,
-                    result.User.Email,
-                    result.Token);
+                var response = mapper.Map<AuthenticationResponse>(result);
 
                 return response;
             })

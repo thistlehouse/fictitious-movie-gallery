@@ -28,4 +28,10 @@ public class User
     {
         return new(firstName, lastName, email, password);
     }
+
+#pragma warning disable CS8618
+    private User()
+    {
+    }
+#pragma warning restore CS8618
 }

@@ -19,6 +19,13 @@ public class RegisterCommandHandler(
         RegisterCommand command,
         CancellationToken cancellationToken)
     {
+        if (await _userRepository.GetUserByEmailAsync(
+            command.Email,
+            cancellationToken) is not null)
+        {
+            throw new Exception("User already exists");
+        }
+
         var user = User.Create(
             command.FirstName,
             command.LastName,
