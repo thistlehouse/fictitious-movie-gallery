@@ -1,4 +1,4 @@
-import { getMovieById } from "@/services/movie-service";
+import { getMovieById } from "@/app/services/movie-service";
 import Image from 'next/image';
 import styles from '@/app/ui/movie-details.module.css';
 

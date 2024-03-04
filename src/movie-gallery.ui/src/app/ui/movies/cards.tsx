@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { getMoviesByFilter } from '@/services/movie-service';
+import { getMoviesByFilter } from '@/app/services/movie-service';
 import { Movie } from '@/app/lib/definitions';
 import styles from '@/app/ui/card.module.css';
 import { StarIcon } from '@heroicons/react/20/solid';
