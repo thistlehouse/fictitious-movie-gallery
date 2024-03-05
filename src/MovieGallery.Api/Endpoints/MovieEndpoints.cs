@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 
 using MovieGallery.Application.Movies.Commands.CreateMovie;
 using MovieGallery.Application.Movies.Queries.ListMovieById;
-using MovieGallery.Application.Movies.Queries.ListMovies;
 using MovieGallery.Application.Movies.Queries.ListMoviesByFilter;
 using MovieGallery.Contracts.Movies;
 
@@ -33,26 +32,6 @@ public static class MovieEndpoints
             return response;
         })
         .RequireAuthorization()
-        .WithName("create-movie")
-        .WithOpenApi();
-
-        group.MapGet(
-            "/all",
-            async (
-                ISender sender,
-                IMapper mapper,
-                CancellationToken cancellationToken) =>
-        {
-            var query = new ListMoviesQuery();
-            var result = await sender.Send(query, cancellationToken);
-
-            var response = result.Select(
-                r => mapper.Map<MovieResponse>(r))
-                    .ToList();
-
-            return response;
-        })
-        .WithName("list-movies")
         .WithOpenApi();
 
         group.MapGet(
@@ -65,11 +44,11 @@ public static class MovieEndpoints
         {
             var query = new ListMovieByIdQuery(id);
             var result = await sender.Send(query, cancellationToken);
-            var response = mapper.Map<MovieResponse>(result);
 
-            return response;
+            return result.IsSuccess
+                ? Results.Ok(mapper.Map<MovieResponse>(result.Value))
+                : Results.BadRequest(result.Error);
         })
-        .WithName("list-movie")
         .WithOpenApi();
 
         group.MapGet(
@@ -83,13 +62,11 @@ public static class MovieEndpoints
             var query = mapper.Map<ListMoviesByFilterQuery>(filter!);
             var result = await sender.Send(query, cancellationToken);
 
-            var response = result.Select(
-                r => mapper.Map<MovieResponse>(r))
-                    .ToList();
-
-            return response;
+            return result.IsSuccess
+                ? Results.Ok(result.Value.Select(
+                    r => mapper.Map<MovieResponse>(r)).ToList())
+                : Results.BadRequest(result.Error);
         })
-        .WithName("list-movies-by-filter")
         .WithOpenApi();
     }
 }

@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 using MovieGallery.Domain.Domain.Movies;
 using MovieGallery.Domain.Movies.Enums;
-using MovieGallery.Domain.Movies.Users;
+using MovieGallery.Domain.Users;
 
 namespace MovieGallery.Infrastructure.Persistence;
 
@@ -17,8 +17,8 @@ public class MovieGalleryDbContext(
     public void SeedMovies(int count)
     {
         string[] classification =
-                [
-                    "P",
+        [
+            "P",
             "P-13",
             "G",
             "R",

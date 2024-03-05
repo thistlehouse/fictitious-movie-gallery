@@ -7,7 +7,7 @@ using Microsoft.IdentityModel.Tokens;
 
 using MovieGallery.Application.Common.Authentication;
 using MovieGallery.Application.Common.Services;
-using MovieGallery.Domain.Movies.Users;
+using MovieGallery.Domain.Users;
 
 namespace MovieGallery.Infrastructure.Authentication;
 

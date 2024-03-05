@@ -16,16 +16,6 @@ public class MovieRepository(MovieGalleryDbContext context) : IMovieRepository
         await context.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task<List<Movie>> GetAll(CancellationToken cancellationToken)
-    {
-        if (context is null)
-        {
-            throw new InvalidOperationException("Dbcontext is null");
-        }
-
-        return await context.Movies.ToListAsync();
-    }
-
     public async Task<Movie?> GetById(Guid id, CancellationToken cancellationToken)
     {
         return await context.Movies.SingleOrDefaultAsync(

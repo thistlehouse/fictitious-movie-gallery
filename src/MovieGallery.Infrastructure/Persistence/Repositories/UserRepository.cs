@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 
 using MovieGallery.Application.Common.Persistence;
-using MovieGallery.Domain.Movies.Users;
+using MovieGallery.Domain.Users;
 
 namespace MovieGallery.Infrastructure.Persistence.Repositories;
 

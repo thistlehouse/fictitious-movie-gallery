@@ -3,30 +3,32 @@ using MediatR;
 using MovieGallery.Application.Authentication.Common;
 using MovieGallery.Application.Common.Authentication;
 using MovieGallery.Application.Common.Persistence;
-using MovieGallery.Domain.Movies.Users;
+using MovieGallery.Domain.Common;
+using MovieGallery.Domain.Errors;
+using MovieGallery.Domain.Users;
 
 namespace MovieGallery.Application.Authentication.Commands.Register;
 
 public class RegisterCommandHandler(
     IUserRepository userRepository,
     IJwtGenerator jwtGenerator)
-    : IRequestHandler<RegisterCommand, AuthenticationResult>
+    : IRequestHandler<RegisterCommand, Result<AuthenticationResult>>
 {
     private readonly IUserRepository _userRepository = userRepository;
     private readonly IJwtGenerator _jwtGenerator = jwtGenerator;
 
-    public async Task<AuthenticationResult> Handle(
+    public async Task<Result<AuthenticationResult>> Handle(
         RegisterCommand command,
         CancellationToken cancellationToken)
     {
-        if (await _userRepository.GetUserByEmailAsync(
-            command.Email,
-            cancellationToken) is not null)
+        if (await _userRepository.GetUserByEmailAsync(command.Email, cancellationToken) is not null)
         {
-            throw new Exception("User already exists");
+            return Result.Failure<AuthenticationResult>(
+                DomainErrors.User.EmailAlreadyRegistered);
         }
 
         var user = User.Create(
+            Guid.NewGuid(),
             command.FirstName,
             command.LastName,
             command.Email,
@@ -36,8 +38,6 @@ public class RegisterCommandHandler(
 
         var token = _jwtGenerator.GenerateToken(user);
 
-        var userResult = new AuthenticationResult(user, token);
-
-        return userResult;
+        return new AuthenticationResult(user, token);
     }
 }

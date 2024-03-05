@@ -1,4 +1,4 @@
-using MovieGallery.Domain.Movies.Users;
+using MovieGallery.Domain.Users;
 
 namespace MovieGallery.Application.Common.Authentication;
 

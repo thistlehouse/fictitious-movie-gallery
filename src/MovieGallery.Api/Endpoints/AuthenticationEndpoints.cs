@@ -21,11 +21,11 @@ public static class AuthenticationEndpoints
             {
                 var command = mapper.Map<RegisterCommand>(request);
                 var result = await sender.Send(command);
-                var response = mapper.Map<AuthenticationResponse>(result);
 
-                return response;
+                return result.IsSuccess
+                    ? Results.Ok(mapper.Map<AuthenticationResponse>(result.Value))
+                    : Results.BadRequest(result.Error);
             })
-            .WithName("create-user")
             .WithOpenApi();
 
         group.MapPost(
@@ -37,9 +37,11 @@ public static class AuthenticationEndpoints
             {
                 var query = mapper.Map<LoginQuery>(request);
                 var result = await sender.Send(query);
-                var response = mapper.Map<AuthenticationResponse>(result);
 
-                return response;
-            });
+                return result.IsSuccess
+                    ? Results.Ok(mapper.Map<AuthenticationResponse>(result.Value))
+                    : Results.BadRequest(result.Error);
+            })
+            .WithOpenApi();
     }
 }

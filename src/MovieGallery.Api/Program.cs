@@ -47,10 +47,10 @@ var app = builder.Build();
         app.UseSwaggerUI();
     }
 
-    app.MapApiEndpoints();
     app.UseAuthentication();
     app.UseAuthorization();
     app.UseHttpsRedirection();
+    app.MapApiEndpoints();
     app.UseCors();
     app.Run();
 }
