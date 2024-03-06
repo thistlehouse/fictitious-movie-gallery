@@ -4,32 +4,34 @@ import { Movie } from '@/app/lib/definitions';
 import styles from '@/app/ui/card.module.css';
 import { StarIcon } from '@heroicons/react/20/solid';
 import Link from 'next/link';
-import { useMemo } from 'react';
 import { Inter } from 'next/font/google';
 
 const inter = Inter({ subsets: ['latin'] });
 
 export default async function CardsWrapper({ query, }: { query: string, }) {
-  const movies: Movie[] = await getMoviesByFilter(query);
+  var movies: Movie[] = await getMoviesByFilter(query);
+
   const categories = Array.from(
     new Set(movies.map(movie => movie.category))
   );
+
   const moviesByCategory = categories.map(category => ({
     category,
     movies: movies.filter(movie => movie.category == category)
   }));
 
   return (
-    <>{movies.length > 0 ? (moviesByCategory.map(category => (
-      <section key={category.category} className={styles.categorySection}>
-        <h1 className={[styles.category, inter.className].join(' ')}>{category.category}</h1>
-        <div className={styles.cardsWrapper}>
-          {category.movies.map(movie =>
-            <Card key={movie.id} movie={movie} />)}
-        </div>
-      </section>))) : (<section className={styles.categorySection}>
-        <p>We are sorry, no movie was found...</p>
-      </section>)}
+    <>
+      {movies.length > 0 ? (moviesByCategory.map(category => (
+        <section key={category.category} className={styles.categorySection}>
+          <h1 className={[styles.category, inter.className].join(' ')}>{category.category}</h1>
+          <div className={styles.cardsWrapper}>
+            {category.movies.map(movie =>
+              <Card key={movie.id} movie={movie} />)}
+          </div>
+        </section>))) : (<section className={styles.categorySection}>
+          <p>No movie was found.</p>
+        </section>)}
     </>
   );
 }

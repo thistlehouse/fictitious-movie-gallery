@@ -77,12 +77,10 @@ export async function register(prevState: State, formData: FormData): Promise<St
   } catch (error: any) {
     console.log(error.response.data);
     return {
-      message: `Something wrong just happened: ${error.data}`,
+      message: `${error.response.data.message}`,
     }
   }
 
-  // revalidatePath('/register');
-  // redirect('/register');
-
-  return { message: "test" };
+  revalidatePath('/register');
+  redirect('/');
 }
