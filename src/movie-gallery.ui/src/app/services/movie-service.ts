@@ -32,3 +32,7 @@ export async function registerUser(user: User) {
   })
     .then((response) => response.data);
 }
+
+export async function rateMovie(rating: number) {
+  noStore();
+}
