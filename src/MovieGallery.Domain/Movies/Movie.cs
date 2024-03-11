@@ -4,8 +4,6 @@ namespace MovieGallery.Domain.Domain.Movies;
 
 public sealed class Movie
 {
-    private decimal _ratingValue;
-
     public Guid Id { get; private set; }
     public string Year { get; private set; }
     public string Name { get; private set; }
@@ -15,9 +13,8 @@ public sealed class Movie
     public Uri ImageUrl { get; private set; }
     public string Synopsis { get; private set; }
     public MovieCategory Category { get; private set; }
-    public decimal Rating { get; private set; }
-    public int NumberRating { get; private set; }
-    public decimal? RatingValue { get => NumberRating > 0 ? _ratingValue : null; private set => _ratingValue = value!.Value; }
+    public decimal? Rating { get; private set; }
+    public int NumberRatings { get; private set; }
 
     private Movie(
         Guid id,
@@ -63,9 +60,14 @@ public sealed class Movie
             category);
     }
 
-    public void AddNewRating(int value)
+    public void AddNewRating(int rating)
     {
-        RatingValue = ((Rating * NumberRating) + value) / ++NumberRating;
+        Rating = ((Rating * NumberRatings) + rating) / ++NumberRatings;
+    }
+
+    public void RemoveRating(int rating)
+    {
+        Rating = ((Rating * NumberRatings) - rating) / --NumberRatings;
     }
 
 #pragma warning disable CS8618

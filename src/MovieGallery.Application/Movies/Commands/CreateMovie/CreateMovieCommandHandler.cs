@@ -30,7 +30,7 @@ public class CreateMovieCommandHandler(
             command.Synopsis,
             category);
 
-        await movieRepository.AddMovieAsync(movie, cancellationToken);
+        await movieRepository.AddAsync(movie, cancellationToken);
 
         var result = new MovieResult(movie);
 

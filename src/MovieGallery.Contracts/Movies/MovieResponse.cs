@@ -10,4 +10,4 @@ public record MovieResponse(
     string ImageUrl,
     string Synopsis,
     string Category,
-    decimal RatingValue);
+    decimal Rating);

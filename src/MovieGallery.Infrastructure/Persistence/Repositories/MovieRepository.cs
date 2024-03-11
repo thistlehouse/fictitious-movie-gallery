@@ -10,7 +10,7 @@ namespace MovieGallery.Infrastructure.Persistence.Repositories;
 public class MovieRepository(MovieGalleryDbContext context) : IMovieRepository
 {
 
-    public async Task AddMovieAsync(Movie movie, CancellationToken cancellationToken)
+    public async Task AddAsync(Movie movie, CancellationToken cancellationToken)
     {
         context.Movies.Add(movie);
         await context.SaveChangesAsync(cancellationToken);
@@ -43,5 +43,12 @@ public class MovieRepository(MovieGalleryDbContext context) : IMovieRepository
         var moviesByCategory = movies.SelectMany(group => group.Movies).ToList();
 
         return moviesByCategory;
+    }
+
+    public async Task PatchAsync(Movie movie, CancellationToken cancellationToken)
+    {
+        context.Entry(movie).State = EntityState.Modified;
+
+        await context.SaveChangesAsync(cancellationToken);
     }
 }

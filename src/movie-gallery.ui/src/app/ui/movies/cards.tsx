@@ -36,6 +36,13 @@ export default async function CardsWrapper({ query, }: { query: string, }) {
   );
 }
 
+const truncateMovieName = (name: string) => {
+  if (name.length > 25) {
+    return name.slice(0, 25) + "...";
+  }
+  return name;
+}
+
 export function Card({ movie }: { movie: Movie }) {
   const Icon = StarIcon;
 
@@ -57,7 +64,7 @@ export function Card({ movie }: { movie: Movie }) {
           />
         </div>
         <div className={styles.details}>
-          <h2>{movie.name}</h2>
+          <h2>{truncateMovieName(movie.name)}</h2>
           <p>{movie.category}</p>
         </div>
       </div>
