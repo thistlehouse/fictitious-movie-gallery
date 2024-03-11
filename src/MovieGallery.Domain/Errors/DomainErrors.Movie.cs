@@ -14,5 +14,10 @@ public static partial class DomainErrors
             new(
                 "MovieOrMovies.NotFound",
                 "Movie or movies not found with given name");
+
+        public static readonly Func<string, Error> MovieCategoryIsNotCorrectlySpecified = category =>
+            new(
+                "MovieCategory.DoesNotExistOrIsInAWrongFormat",
+                $"Movie category {category} does not exists or is in a wrong format");
     }
 }

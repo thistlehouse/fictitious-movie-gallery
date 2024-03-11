@@ -14,10 +14,12 @@ public static class AuthenticationEndpoints
     {
         var group = builder.MapGroup("auth").WithTags("Auth");
 
-        group.MapPost("/register", async (
-            RegisterRequest request,
-            IMapper mapper,
-            ISender sender) =>
+        group.MapPost(
+            "/register",
+            async (
+                RegisterRequest request,
+                IMapper mapper,
+                ISender sender) =>
             {
                 var command = mapper.Map<RegisterCommand>(request);
                 var result = await sender.Send(command);

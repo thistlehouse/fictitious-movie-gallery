@@ -1,6 +1,7 @@
 using MediatR;
 
 using MovieGallery.Application.Movies.Common;
+using MovieGallery.Domain.Common;
 
 namespace MovieGallery.Application.Movies.Commands.CreateMovie;
 
@@ -12,4 +13,4 @@ public record CreateMovieCommand(
     int Duration,
     string ImageUrl,
     string Synopsis,
-    string Category) : IRequest<MovieResult>;
+    string Category) : IRequest<Result<MovieResult>>;
