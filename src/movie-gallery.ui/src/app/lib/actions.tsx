@@ -1,7 +1,7 @@
 'use server';
 
 import { z } from "zod";
-import { registerUser } from "@/app/services/movie-service";
+import { rateMovie, registerUser } from "@/app/services/movie-service";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { User } from "./definitions";
@@ -17,7 +17,7 @@ export type State = {
   message?: string | null;
 };
 
-const FormSchema = z
+const RegisterSchema = z
   .object({
     firstName: z.string({
       invalid_type_error: 'Please write first name',
@@ -44,7 +44,7 @@ const FormSchema = z
   }));
 
 export async function register(prevState: State, formData: FormData): Promise<State> {
-  const validateFields = FormSchema.safeParse({
+  const validateFields = RegisterSchema.safeParse({
     firstName: formData.get('firstName'),
     lastName: formData.get('lastName'),
     email: formData.get('email'),
@@ -82,5 +82,16 @@ export async function register(prevState: State, formData: FormData): Promise<St
   }
 
   revalidatePath('/register');
+  redirect('/');
+}
+
+export async function movieRating(
+  prevState: number | undefined,
+  formData: FormData,
+): Promise<number> {
+  const rating: number = Number(formData.get('rating'));
+  await rateMovie(rating);
+
+  // revalidatePath('/');
   redirect('/');
 }
