@@ -8,6 +8,7 @@ export type User = {
 export type Movie = {
   id: string;
   name: string;
+  year: string;
   classification: string;
   cast: string[];
   duration: number;
