@@ -21,15 +21,27 @@ export async function getMoviesByFilter(filter: string) {
   return response.data
 }
 
+export async function loginUser(user: User) {
+  noStore();
+
+  return await baseUrl
+    .post('auth/login', {
+      email: user.email,
+      password: user.password,
+    })
+    .then((response) => response.data);
+}
+
 export async function registerUser(user: User) {
   noStore();
 
-  return await baseUrl.post('auth/register', {
-    firstName: user.firstName,
-    lastName: user.lastName,
-    email: user.email,
-    password: user.password,
-  })
+  return await baseUrl
+    .post('auth/register', {
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      password: user.password,
+    })
     .then((response) => response.data);
 }
 

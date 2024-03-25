@@ -1,7 +1,7 @@
 'use server';
 
 import { z } from "zod";
-import { rateMovie, registerUser } from "@/app/services/movie-service";
+import { rateMovie, registerUser, loginUser } from "@/app/services/movie-service";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { User } from "./definitions";
@@ -42,6 +42,48 @@ const RegisterSchema = z
     password: data.password,
     confirmPassword: data.confirmPassword,
   }));
+
+const LoginSchema = z
+  .object({
+    email: z.string({
+      invalid_type_error: 'Please write email',
+    }),
+    password: z.string(),
+  });
+
+export async function login(prevState: State, formData: FormData): Promise<State> {
+  const validateFields = LoginSchema.safeParse({
+    email: formData.get('password'),
+    password: formData.get('password'),
+  });
+
+  if (!validateFields.success) {
+    return {
+      errors: validateFields.error.flatten().fieldErrors,
+    };
+  }
+
+  const { email, password } = validateFields.data;
+
+  const user: User = {
+    firstName: "",
+    lastName: "",
+    email: email,
+    password: password,
+  }
+
+  try {
+    await loginUser(user);
+  } catch (error: any) {
+    console.log(error.response.data);
+    return {
+      message: `${error.response.data}`,
+    };
+  }
+
+  revalidatePath('/register');
+  redirect('/');
+}
 
 export async function register(prevState: State, formData: FormData): Promise<State> {
   const validateFields = RegisterSchema.safeParse({
