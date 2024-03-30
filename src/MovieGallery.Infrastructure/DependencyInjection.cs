@@ -41,6 +41,7 @@ public static class DependencyInjection
     {
         services.AddSingleton<IJwtGenerator, JwtGenerator>();
         services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
+        services.AddScoped<IEmailService, EmailService>();
 
         return services;
     }
