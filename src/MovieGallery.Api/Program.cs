@@ -6,6 +6,7 @@ using MovieGallery.Api.OptionsSetup.Authentication;
 using MovieGallery.Application;
 using MovieGallery.Infrastructure;
 using MovieGallery.Infrastructure.Persistence;
+using MovieGallery.Infrastructure.Services.Email;
 
 var builder = WebApplication.CreateBuilder(args);
 {
@@ -16,6 +17,8 @@ var builder = WebApplication.CreateBuilder(args);
 
     builder.Services.ConfigureOptions<JwtOptionsSetup>();
     builder.Services.ConfigureOptions<JwtBearerOptionsSetup>();
+    builder.Services.ConfigureOptions<EmailOptions>();
+
     builder.Services.AddAuthorization();
 
     builder.Services
