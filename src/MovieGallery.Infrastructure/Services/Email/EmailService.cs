@@ -3,11 +3,14 @@ using MailKit.Security;
 
 using Microsoft.Extensions.Options;
 
+
 using MimeKit;
 using MimeKit.Text;
 
 using MovieGallery.Application.Common.Services;
+using MovieGallery.Domain.Users;
 using MovieGallery.Infrastructure.Services.Email;
+
 
 namespace MovieGallery.Infrastructure.Services;
 
@@ -17,7 +20,7 @@ public class EmailService(IOptions<EmailOptions> emailOptions) : IEmailService
 
     private readonly EmailOptions _emailOptions = emailOptions.Value;
 
-    public void ConfirmRegistrationMessage()
+    public void SendConfirmRegistrationMessage(User user)
     {
         var email = new MimeMessage();
 
@@ -26,7 +29,7 @@ public class EmailService(IOptions<EmailOptions> emailOptions) : IEmailService
         email.Subject = Subject;
         email.Body = new TextPart(TextFormat.Html)
         {
-            Text = "Click here to confirm your registration\nhttp://localhost:5106/confirm",
+            Text = $"Hi {user.FirstName}, click <a href='http://localhost:5106/confirm'>here</a> to confirm your registration",
         };
 
         using var smtp = new SmtpClient();

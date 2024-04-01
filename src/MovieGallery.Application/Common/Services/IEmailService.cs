@@ -1,6 +1,8 @@
+using MovieGallery.Domain.Users;
+
 namespace MovieGallery.Application.Common.Services;
 
 public interface IEmailService
 {
-    public void ConfirmRegistrationMessage();
+    public void SendConfirmRegistrationMessage(User user);
 }
